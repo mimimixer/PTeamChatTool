@@ -5,11 +5,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-
-import javafx.application.Platform;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-
 public class ChatServer implements Runnable {
     private int port=8000;
     private Socket socket;
@@ -18,9 +13,18 @@ public class ChatServer implements Runnable {
     private BufferedWriter out; //= new BufferedWriter(new OutputStreamWriter(new StringWriter(socket.getInputStream)));
     private BufferedReader readFromClient;// = new BufferedReader(new StringReader(ServerController.onSendButtonClick()));
 
+
+    //for the server we need an arraylist to know the clients who connected
+    //implementing Runnable means, Objects will be executed by a Thread
+    //sowhen we start server, we opent he arraylist and fill it in the run method
+    // by accepting connections, accepting messages and broadcasting them
+
+    //Clients will be handled by a ConnectionHandler Class, evey client will be new Object
+
     public ChatServer(){
       //  this.port=port;
         userList = new ArrayList<>();
+        System.out.println("ChatServer");
     }
 
     @Override
@@ -32,6 +36,7 @@ public class ChatServer implements Runnable {
              userList.add(newClient);
              Thread thread=new Thread(newClient);
              thread.start();
+             System.out.println("bis hierher gings");
          //   this.out = new BufferedWriter(new OutputStreamWriter(client.getOuputStream());
          //   this.readFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
         } catch (IOException e) {
@@ -57,6 +62,8 @@ public class ChatServer implements Runnable {
         }
     }
 
+    //Clients will be handled by a ConnectionHandler
+    //ConnectionHandler opens an Object with each Client
 
         class ConnectionHandler implements Runnable {
             private Socket client;
@@ -67,15 +74,16 @@ public class ChatServer implements Runnable {
 
             public ConnectionHandler(Socket client) {
                 this.client = client;
+                this.clientUsername = Integer.toString(client.getLocalPort());
+                System.out.println("ConnectionHandler");
             }
-
-            public String getClientUsername() {
-                return clientUsername;
-            }
+            // will operate by Threads because of runnable:
+            //so wen we run it, Server has already accepted a connection in Socket
+            // we created ConnectionHAndler Object with it, is operating in a Thread.
+            //by running the object we do: get new username, print it to screen,
 
             public void run() {
                 try {
-                    this.clientUsername = Integer.toString(client.getLocalPort());
                     printToScreen = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
                     readFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
                     //  printToScreen = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
@@ -87,7 +95,9 @@ public class ChatServer implements Runnable {
                     System.out.println("Coudn't connect client"); //eigentlich sollt das aufm interface
                 }
             }
-
+            public String getClientUsername() {
+                return clientUsername;
+            }
 
             public void sendMessage (String message){
                     try {
@@ -120,33 +130,3 @@ public class ChatServer implements Runnable {
     }
 
     }
-
-/*
-     public void writeMessageToSocket(com.example.server.ConnectionHandler client, String messageToServer) throws IOException {
-                try {
-                    printToScreen.write(messageToServer);
-                    printToScreen.newLine();
-                    printToScreen.flush();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("Error sending message to the Client!");
-                    printToScreen.close();
-                }
-            }
-
-        }
-
-    public static void writeMessageToSocket(String messageToServer, BufferedWriter bufferedWriter) throws IOException {
-        try {
-            bufferedWriter.write(messageToServer);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error sending message to the Client!");
-            bufferedWriter.close();
-        }
-
- */
-
-

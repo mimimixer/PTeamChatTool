@@ -4,14 +4,27 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+//for the client we need create a new CLientObject with this Socket
+//implementing Runnable means, Objects will be executed by a Thread
+//sowhen we create Client and run it, it will be assigned the Socket, a read and write function,
+// and a ClientHandler, beeing executed by an own Thread
+
 public class Client implements Runnable {
     private Socket client;
     private BufferedWriter out; //= new BufferedWriter(new OutputStreamWriter(new StringWriter(socket.getInputStream)));
     private BufferedReader readFromClient;
 
+    public Client ()  {
+        try {
+            client = new Socket("localhost", 8000);
+            System.out.println("Client check");
+        }catch (IOException e){
+            System.out.println("couldnt create client");
+        }
+    }
+
     public void run() {
         try {
-            Socket client = new Socket("localhost", 8000);
         //    out = new BufferedWriter(new OutputStreamWriter(client.getOuputStream()));
             readFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
             ClientHandler inHandler= new ClientHandler(client);
@@ -35,6 +48,7 @@ public class Client implements Runnable {
         }
     }
 
+    //The ClientHandler is assigned a CLient, waits for incoming and outgoing messages to forward
 
     class ClientHandler implements Runnable {
         private Socket client;
@@ -51,16 +65,16 @@ public class Client implements Runnable {
                 printToScreen = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
                 BufferedReader textIn = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String message = textIn.readLine();
-                out.write(message);
+                printToScreen.write(message);
             } catch (IOException e) {
-                System.out.println("Coudn't connect client"); //eigentlich sollt das aufm interface
+                System.out.println("Coudn't connect client");
             }
         }
     }
 
     public static void main(String[] args) {
-        Client client1=new Client();
-        client1.run();
+        Client client=new Client();
+        client.run();
     }
 
 }
