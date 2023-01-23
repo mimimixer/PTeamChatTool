@@ -3,11 +3,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.simplechat.ChatController">
+<BorderPane fx:id="mainPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.pteamchattool.ServerController">
     <top>
-        <MenuBar BorderPane.alignment="CENTER">
+        <MenuBar BorderPane.alignment="CENTER_RIGHT" >
             <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu mnemonicParsing="false" text="Close Server">
                     <items>
                         <MenuItem fx:id="cancelButton" mnemonicParsing="false" onAction="#onCancelButtonClick" text="Close" />
                     </items>
@@ -32,18 +32,18 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button id="sendButton" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="25.0" prefWidth="55.0" text="Send" GridPane.columnIndex="2" />
-                <Button mnemonicParsing="false" onAction="#onStartServerButtonClick" text="Start Server" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Button mnemonicParsing="false" onAction="#onConnectClick" text="Connect" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <Button mnemonicParsing="false" onAction="#onDisconnectClick" text="Disconnect" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <TextField fx:id="input" prefHeight="25.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
-                <TextField fx:id="portInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="hostInput" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="34.0" text="Port" GridPane.rowIndex="1" />
-                <Label alignment="CENTER" prefHeight="17.0" prefWidth="35.0" text="Host" GridPane.rowIndex="2" />
-                <Label prefHeight="17.0" prefWidth="34.0" text="  Text" />
-                <Label text=" Username" GridPane.rowIndex="3" />
-                <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Button mnemonicParsing="false" onAction="#onStartServerButtonClick" prefHeight="25.0" prefWidth="100.0" text="Start Server" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                <Button mnemonicParsing="false" onAction="#onConnectClick" prefHeight="25.0" prefWidth="100.0" text="Connect" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Button mnemonicParsing="false" onAction="#onDisconnectClick" prefHeight="25.0" prefWidth="100.0"  text="Disconnect" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                <Button id="sendButton" mnemonicParsing="false" onAction="#onSendButtonClick" prefHeight="25.0" prefWidth="100.0" text="Send" GridPane.columnIndex="2" GridPane.rowIndex="3"/>
+                <TextField fx:id="portInput" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                <TextField fx:id="hostInput" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="34.0" text="Port" GridPane.rowIndex="0" />
+                <Label alignment="CENTER" prefHeight="17.0" prefWidth="35.0" text="Host" GridPane.rowIndex="1" />
+                <Label text=" Username" GridPane.rowIndex="2" />
+                <Label prefHeight="17.0" prefWidth="34.0" text="  Text" GridPane.rowIndex="3"/>
+                <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="input" prefHeight="25.0" prefWidth="477.0" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.hgrow="ALWAYS" />
             </children>
         </GridPane>
     </bottom>
