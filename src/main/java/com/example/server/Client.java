@@ -11,10 +11,10 @@ public class Client implements Runnable {
 
     public void run() {
         try {
-            Socket client = new Socket("127.0.0.1", 8000);
+            Socket client = new Socket("localhost", 8000);
         //    out = new BufferedWriter(new OutputStreamWriter(client.getOuputStream()));
             readFromClient = new BufferedReader(new InputStreamReader(client.getInputStream()));
-            ClientHandler inHandler= new ClientHandler();
+            ClientHandler inHandler= new ClientHandler(client);
             Thread thread=new Thread(inHandler);
             thread.start();
         } catch (IOException e) {
@@ -41,6 +41,10 @@ public class Client implements Runnable {
         private BufferedWriter printToScreen;
         private BufferedReader readFromClient;
         private String clientUsername;
+
+        public ClientHandler(Socket client){
+            this.client=client;
+        }
 
         public void run() {
             try {
